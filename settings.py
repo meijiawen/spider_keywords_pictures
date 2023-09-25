@@ -30,8 +30,11 @@ log_path = 'log.txt'
 bilibili_video_screen_shot_path = "./b站视频封面/"
 bilibili_video_path = "./b站视频/"
 bilibili_article_picture_path = "./b站专栏/"
+bilibili_cookie_path = "./b站cookies.txt"
 # bilibili 爬取页数
 bilibili_page = 5
+# bilibili 鼠标滚轮滑动时长
+bilibili_scroll_time = 50
 
 # 微博 存储目录
 weibo_current_path = "./微博实时动态/"
@@ -86,4 +89,4 @@ weixin_article_path = "./微信公众号文章/"
 # 搜狗微信 爬取页数
 weixin_page = 5
 # 搜狗微信 代理IP 使用快代理的隧道代理服务，可以不设置，但是爬取过多时可能会导致封IP
-weixin_proxy = None # "XXX.XXX.com:XXXXX"
+weixin_proxy = None  # "XXX.XXX.com:XXXXX"

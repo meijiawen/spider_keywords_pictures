@@ -1,6 +1,5 @@
 async-generator==1.10
 attrs==22.2.0
-beautifulsoup4==4.11.1
 bs4==0.0.1
 certifi==2022.12.7
 cffi==1.15.1
@@ -48,3 +47,5 @@ wheel==0.37.1
 wincertstore==0.2
 wsproto==1.2.0
 you-get==0.4.1650
+beautifulsoup4 
+webdriver-manager

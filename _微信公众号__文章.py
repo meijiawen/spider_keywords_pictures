@@ -18,24 +18,33 @@ from tools import log, getResModel, excel, download_pic
 
 
 class Weixin:
+
     def __init__(self):
         if not os.path.exists(weixin_article_path):
             os.mkdir(weixin_article_path)
 
         chrome_options = webdriver.ChromeOptions()
         if weixin_proxy is not None:
-            chrome_options.add_argument('--proxy-server=http://{}'.format(weixin_proxy))  # 隧道域名:端口号
-        chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
+            chrome_options.add_argument(
+                '--proxy-server=http://{}'.format(weixin_proxy))  # 隧道域名:端口号
+        chrome_options.add_experimental_option("excludeSwitches",
+                                               ['enable-automation'])
         chrome_options.add_experimental_option('useAutomationExtension', False)
         chrome_options.add_argument("--disable-blink-features")
-        chrome_options.add_argument("--disable-blink-features=AutomationControlled")
-        chrome_options.add_argument('user-agent=Mozilla/5.0 (Windows NT 6.1; WOW64; rv:30.0) Gecko/20100101 Firefox/30.0')
-        s = Service('./chromedriver.exe')
+        chrome_options.add_argument(
+            "--disable-blink-features=AutomationControlled")
+        chrome_options.add_argument(
+            'user-agent=Mozilla/5.0 (Windows NT 6.1; WOW64; rv:30.0) Gecko/20100101 Firefox/30.0'
+        )
+        s = Service('./chromedriver')
         self.driver = webdriver.Chrome(service=s, options=chrome_options)
 
         self.__updateCookie()
 
-        self.ocr = ddddocr.DdddOcr(det=False, ocr=False, import_onnx_path=weixin_import_onnx_path, charsets_path=weixin_charsets_path)
+        self.ocr = ddddocr.DdddOcr(det=False,
+                                   ocr=False,
+                                   import_onnx_path=weixin_import_onnx_path,
+                                   charsets_path=weixin_charsets_path)
 
     def __updateCookie(self):
         if not os.path.exists(weixin_cookie_path):
@@ -51,7 +60,7 @@ class Weixin:
         else:
             pass
 
-    def setKeyword(self, keywords:list):
+    def setKeyword(self, keywords: list):
         self.keyword = "+".join(keywords)
 
     def __loginAuto(self):
@@ -65,7 +74,7 @@ class Weixin:
                     self.driver.add_cookie(cookie)  # 加入cookies
             self.driver.refresh()
 
-    def searchArticle(self, pageNumber:int):
+    def searchArticle(self, pageNumber: int):
         self.driver.get('https://weixin.sogou.com/')
         self.driver.maximize_window()
         wait = WebDriverWait(self.driver, 10)
@@ -88,7 +97,7 @@ class Weixin:
                 time.sleep(2)
                 self.driver.back()
                 time.sleep(2)
-                i+=1
+                i += 1
             # 直到不存在下一页  爬取结束
             except:
                 try:
@@ -99,12 +108,14 @@ class Weixin:
 
     def __getNews(self):
         # 全局变量  统计文章数  记序
-        article_lis = self.driver.find_elements(By.XPATH, '//ul[@class="news-list"]/li')
+        article_lis = self.driver.find_elements(By.XPATH,
+                                                '//ul[@class="news-list"]/li')
         for article in article_lis:
 
             introduction = "-"
             try:
-                introduction = article.find_element(By.CLASS_NAME, "txt-info").text
+                introduction = article.find_element(By.CLASS_NAME,
+                                                    "txt-info").text
             except:
                 pass
 
@@ -123,17 +134,23 @@ class Weixin:
                 author = self.driver.find_element(By.ID, "js_name").text
                 title = self.driver.find_element(By.ID, "activity-name").text
 
-                pics = self.driver.find_element(By.ID, "img-content").find_elements(By.TAG_NAME, "img")
+                pics = self.driver.find_element(By.ID,
+                                                "img-content").find_elements(
+                                                    By.TAG_NAME, "img")
 
                 for pic in pics:
                     try:
                         pic_url = pic.get_attribute("src")
                         if len(pic_url) < 5:
                             continue
-                        temp = self.__divideWeixin(author=author, title=title,
-                                                    introduction=introduction,
-                                                    url_article=self.driver.current_url, url_pic=pic_url,
-                                                    url_local=weixin_article_path + self.keyword + str(excel.nrows) + ".png")
+                        temp = self.__divideWeixin(
+                            author=author,
+                            title=title,
+                            introduction=introduction,
+                            url_article=self.driver.current_url,
+                            url_pic=pic_url,
+                            url_local=weixin_article_path + self.keyword +
+                            str(excel.nrows) + ".png")
                         print(temp)
                         download_pic(pic_url, temp[record_url_local])
                         excel.appendRecord(temp)
@@ -165,15 +182,22 @@ class Weixin:
         except:
             pass
 
-    def __scrollToBottom(self, scrollTime:int):
+    def __scrollToBottom(self, scrollTime: int):
         for i in range(scrollTime):
             pyautogui.scroll(-400)
             time.sleep(0.2)
 
-    def __divideWeixin(self, author: str, title:str, introduction:str,
-                                url_article: str, url_pic: str, url_local:str):
-        res = getResModel(type='图片', source="微信公众号文章", keyword=self.keyword,
-                          author=author, title=title, introduction=introduction,
-                          tags=["-"], caption="-", url_article=url_article,
-                          url_pic=url_pic, url_local=url_local)
+    def __divideWeixin(self, author: str, title: str, introduction: str,
+                       url_article: str, url_pic: str, url_local: str):
+        res = getResModel(type='图片',
+                          source="微信公众号文章",
+                          keyword=self.keyword,
+                          author=author,
+                          title=title,
+                          introduction=introduction,
+                          tags=["-"],
+                          caption="-",
+                          url_article=url_article,
+                          url_pic=url_pic,
+                          url_local=url_local)
         return res
