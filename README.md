@@ -1,3 +1,7 @@
+
+原项目1：[关键字爬虫](<https://github.com/Maryin-c/KeywordSpider_pictures_videos>>)
+原项目2：[b站视频评论爬虫](<https://github.com/Ghauster/BilibiliCommentScraper>)
+
 ## 爬取各网站图片
 
 2023.09.25 调试完成b站专栏图片、b站视频url、知乎问答文章图片的爬取【selenium-linux】
