@@ -20,6 +20,7 @@ import json
 import sys
 import tempfile
 import shutil
+from settings import bili_video_comment
 
 
 def write_error_log(message):
@@ -251,13 +252,16 @@ def scroll_to_bottom(driver):
 
 def write_to_csv(video_id, index, level, parent_nickname, parent_user_id,
                  nickname, user_id, content, time, likes):
-    file_exists = os.path.isfile(f'{video_id}.csv')
+    if not os.path.exists(bili_video_comment):
+        os.mkdir(bili_video_comment)
+    path = bili_video_comment + f'{video_id}.csv'
+    file_exists = os.path.isfile(path)
     max_retries = 50
     retries = 0
 
     while retries < max_retries:
         try:
-            with open(f'{video_id}.csv',
+            with open(path,
                       mode='a',
                       encoding='utf-8',
                       newline='') as csvfile:
@@ -352,10 +356,10 @@ def main():
     # 首次登录获取cookie文件
     cookies_file = 'cookies.pkl'
     print("测试cookies文件是否已获取。若无，请在弹出的窗口中登录b站账号，登录完成后，窗口将关闭；若有，窗口会立即关闭")
-    # driver = webdriver.Chrome(service=Service(
-    #     executable_path=ChromeDriverManager().install()))
-    s = Service('./chromedriver')
-    driver = webdriver.Chrome(service=s)
+    driver = webdriver.Chrome(service=Service(
+        executable_path=ChromeDriverManager().install()))
+    # s = Service('./chromedriver')
+    # driver = webdriver.Chrome(service=s)
     driver.get('https://space.bilibili.com/')
     if not load_cookies(driver, cookies_file):
         manual_login(driver, cookies_file)
@@ -377,10 +381,10 @@ def main():
     chrome_options.add_argument("--incognito")
     # 禁用GPU加速，避免浏览器崩溃
     chrome_options.add_argument("--disable-gpu")
-    driver = webdriver.Chrome(service=s, options=chrome_options)
-    # driver = webdriver.Chrome(
-    #     service=Service(executable_path=ChromeDriverManager().install()),
-    #     options=chrome_options)
+    # driver = webdriver.Chrome(service=s, options=chrome_options)
+    driver = webdriver.Chrome(
+        service=Service(executable_path=ChromeDriverManager().install()),
+        options=chrome_options)
     driver.get('https://space.bilibili.com/')
     load_cookies(driver, cookies_file)
 

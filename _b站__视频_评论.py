@@ -5,6 +5,7 @@ import traceback
 import pyautogui
 
 from selenium import webdriver  # 导入selenium包
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 
@@ -31,9 +32,11 @@ class Bilibili_video:
         chrome_options.add_argument("--disable-blink-features")
         chrome_options.add_argument(
             "--disable-blink-features=AutomationControlled")
-        s = Service('./chromedriver')
-        # # s = Service("Driver/geckodriver.exe")
-        self.driver = webdriver.Chrome(service=s, options=chrome_options)
+        # s = Service('./chromedriver')
+        # # # s = Service("Driver/geckodriver.exe")
+        # self.driver = webdriver.Chrome(service=s, options=chrome_options)
+        self.driver = webdriver.Chrome(service=Service(
+            executable_path=ChromeDriverManager().install()))
         # self.driver = webdriver.Chrome(options=chrome_options)
 
         self.__updateCookie()
@@ -90,5 +93,5 @@ class Bilibili_video:
                 f.write(url + "\n")
 
         time.sleep(2)
-        print(urls)
+        # print(urls)
         return
