@@ -1,6 +1,7 @@
 
-原项目1：[关键字爬虫](<https://github.com/Maryin-c/KeywordSpider_pictures_videos>>)
-原项目2：[b站视频评论爬虫](<https://github.com/Ghauster/BilibiliCommentScraper>)
+原项目1：[关键字爬虫](https://github.com/Maryin-c/KeywordSpider_pictures_videos)
+
+原项目2：[b站视频评论爬虫](https://github.com/Ghauster/BilibiliCommentScraper)
 
 ## 爬取各网站图片
 
