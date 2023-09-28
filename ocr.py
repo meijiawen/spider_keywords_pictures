@@ -5,6 +5,7 @@ from PIL import Image
 from openpyxl import Workbook
 from openpyxl.drawing.image import Image
 import os
+from settings import bilibili_article_picture_path, zhihu_article_path
 
 
 def image_path(dirname):
@@ -63,6 +64,8 @@ sheet = workbook.active
 
 # 图片和对应的列表
 image_list = image_path('/home/PJLAB/meijiawen/Documents/puyu/test')
+# image_list = image_path(bilibili_article_picture_path)
+
 # 在Excel中添加图片和列表
 for index, item in enumerate(image_list, start=1):
     image_path = item["image_path"]
@@ -83,4 +86,4 @@ for index, item in enumerate(image_list, start=1):
     sheet.cell(row=index, column=2, value=list_data)
 
 # 保存Excel文件
-workbook.save("output.xlsx")
+workbook.save(bilibili_article_picture_path + "output.xlsx")

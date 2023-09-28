@@ -5,7 +5,8 @@
 
 ## 爬取各网站图片
 
-2023.09.25 调试完成b站专栏图片、b站视频url、知乎问答文章图片的爬取【selenium-linux】
+2023.09.25 调试完成b站专栏图片、b站视频url、知乎问答文章图片的爬取
+
 2023.09.28 用ocr提取爬取到的图片
 
 ### 1.环境配置
@@ -17,6 +18,7 @@
 * ocr识别安装
 您的机器安装的是CUDA9或CUDA10，请运行以下命令安装
 `python3 -m pip install paddlepaddle-gpu -i <https://mirror.baidu.com/pypi/simple>`
+
 您的机器是CPU，请运行以下命令安装
 `python3 -m pip install paddlepaddle -i <https://mirror.baidu.com/pypi/simple>`
 
@@ -51,7 +53,7 @@
 * 若要修改最大滚动次数（默认45次，预计最多爬取到920条一级评论），请在代码中修改参数MAX_SCROLL_COUNT的值。注意，滚动次数过多，加载的数据过大，网页可能会因内存占用过大而崩溃。
 * 若要设定最大二级评论页码数（默认为150页），请在代码中修改参数max_sub_pages的值（若想无限制，请设为max_sub_pages = None）。建议设定一个上限以减少内存占用，避免页面崩溃。
 
-4. 运行代码：python Bilicomment.py（或pycharm等软件打开运行）。代码使用selenium爬取数据。
+4. 运行代码：`python Bilicomment.py`。代码使用selenium爬取数据。
 5. 根据看到"请登录，登录成功跳转后，按回车键继续..."提示后，请登录 Bilibili。登录成功并跳转后，回到代码，按回车键继续。
 6. 等待爬取完成。每个视频的评论数据将保存到以视频 ID 命名的 CSV 文件中， CSV 文件位于代码文件同级目录下。
 7. 输出的 CSV 文件将包括以下列：'一级评论计数', '隶属关系'（一级评论/二级评论）, '被评论者昵称'（如果是一级评论，则为“up主”）, '被评论者ID'（如果是一级评论，则为“up主”）, '昵称', '用户ID', '评论内容', '发布时间', '点赞数'。
