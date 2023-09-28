@@ -6,12 +6,19 @@
 ## 爬取各网站图片
 
 2023.09.25 调试完成b站专栏图片、b站视频url、知乎问答文章图片的爬取【selenium-linux】
+2023.09.28 用ocr提取爬取到的图片
 
 ### 1.环境配置
 
 * !! python3.9 !!
 * pip install -r requirements.txt
 * 如果安装requirements报错，可以按照报错提示安装
+
+* ocr识别安装
+您的机器安装的是CUDA9或CUDA10，请运行以下命令安装
+`python3 -m pip install paddlepaddle-gpu -i <https://mirror.baidu.com/pypi/simple>`
+您的机器是CPU，请运行以下命令安装
+`python3 -m pip install paddlepaddle -i <https://mirror.baidu.com/pypi/simple>`
 
 ### 2.基本设置
 
@@ -51,3 +58,7 @@
 ![爬取字段示例](/image/output_sample.png)
 7. 输出的 CSV 文件是utf-8编码，若**乱码**，请检查编码格式（可以先用记事本打开查看）。
 8. 如果有视频因为错误被跳过，将会被记录在代码同级文件夹下的video_errorlist.txt中。
+
+## ocr提取图片文字
+
+`python ocr.py`

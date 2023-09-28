@@ -49,3 +49,4 @@ wsproto==1.2.0
 you-get==0.4.1650
 beautifulsoup4 
 webdriver-manager
+paddleocr>=2.0.1
