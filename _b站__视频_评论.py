@@ -22,7 +22,6 @@ requests.DEFAULT_RETRIES = 5  # 增加重试连接次数
 class Bilibili_video:
 
     def __init__(self):
-        # self.keyword = " ".join(keyword)
         if not os.path.exists(bilibili_video_path):
             os.mkdir(bilibili_video_path)
 
@@ -65,33 +64,37 @@ class Bilibili_video:
                         print(cookie)
             self.driver.refresh()
 
-    def __scrollToBottom(self, scrollTime: int):
-        for i in range(scrollTime):
-            pos = pyautogui.size()
-            pyautogui.moveTo(pos.width / 2, pos.height / 2)
-            pyautogui.scroll(-400)
-            time.sleep(0.2)
 
-    def searchVideo(self, scrollTime: int):
+    def searchVideo(self, pageNumber: int):
         self.driver.get('https://search.bilibili.com/video?keyword={}'.format(
             self.keyword))
         self.driver.maximize_window()
         print("开始搜索")
         time.sleep(2)
-        self.__scrollToBottom(scrollTime)
 
-        with open("video_list.txt", "w") as f:
+        i = 0
+        while i < pageNumber:
+            self.write_to_txt()
+            time.sleep(2)
+            try:
+                self.driver.find_element(By.XPATH, '//*[@id="i_cecream"]/div/div[2]/div[2]/div/div/div[2]/div/div/button[10]').click()
+                time.sleep(5)
+                i += 1
+            # 直到不存在下一页  爬取结束
+            except:
+                log(traceback.format_exc())
+            
+    
+    def write_to_txt(self):
+        path = bilibili_video_path + f'{self.keyword}.txt'
+        with open(path, 'a') as f:
             urls = []
-            introductions = []
             for video in self.driver.find_elements(By.CLASS_NAME,
                                                    "bili-video-card"):
                 title = video.find_element(By.CSS_SELECTOR,
                                            '[target="_blank"]')
                 url = title.get_attribute('href')
                 urls.append(url)
-                print(url)
                 f.write(url + "\n")
+            print(urls)
 
-        time.sleep(2)
-        # print(urls)
-        return

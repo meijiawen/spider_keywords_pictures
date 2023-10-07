@@ -31,9 +31,9 @@ bilibili_video_screen_shot_path = "./b站视频封面/"
 bilibili_video_path = "./b站视频/"
 bilibili_article_picture_path = "./b站专栏/"
 bilibili_cookie_path = "./b站cookies.txt"
-bili_video_comment = "./b站视频评论/"
+bili_video_comment_path = "./b站视频评论/"
 # bilibili 爬取页数
-bilibili_page = 5
+bilibili_page = 2
 # bilibili 鼠标滚轮滑动时长
 bilibili_scroll_time = 50
 

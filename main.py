@@ -7,6 +7,7 @@ from _抖音__视频 import Douyin
 from _快手__视频 import KuaiShou
 from _Youtube__视频 import Youtube
 from _微信公众号__文章 import Weixin
+from Bilicomment import Bilibili_video_comment
 from settings import bilibili_page, bilibili_scroll_time, weibo_page, toutiao_page, toutiao_scroll_time, youtube_scroll_time, \
     zhihu_scroll_time, douyin_scroll_time, kuaishou_scroll_time, weixin_page
 from tools import excel
@@ -27,13 +28,15 @@ def bilibili(key: str, page=5):
         # excel.saveExcel()
 
 
-def bilibili_video(key: str, scrollTime=50):
-    bili_video = Bilibili_video()
+def bilibili_video(key: str, page=1):
+    # bili_video = Bilibili_video()
+    bili_video_comment = Bilibili_video_comment()
     for item in excel.keywordDict[key]:
 
-        bili_video.setKeyword(item)
+        # bili_video.setKeyword(item)
 
-        bili_video.searchVideo(scrollTime=scrollTime)
+        # bili_video.searchVideo(pageNumber=page)
+        bili_video_comment.biliComment(item)
         # excel.saveExcel()
 
 
@@ -158,4 +161,4 @@ if __name__ == "__main__":
     elif type == 7:
         kuaishou(keyList, scrollTime=kuaishou_scroll_time)
     elif type == 8:
-        bilibili_video(keyList, scrollTime=bilibili_scroll_time)
+        bilibili_video(keyList, page=bilibili_page)
