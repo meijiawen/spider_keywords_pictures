@@ -20,7 +20,7 @@ opencv-python-headless==4.7.0.68
 openpyxl==3.0.10
 outcome==1.2.0
 packaging==23.0
-Pillow==9.4.0
+Pillow==10.0.1
 pip==22.3.1
 protobuf==4.21.12
 PyAutoGUI==0.9.53
